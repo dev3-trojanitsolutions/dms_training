@@ -1,5 +1,6 @@
 app_name = "dms_training"
-app_title = "dms training"
+app_title = "DMS Training"
+app_logo_url = "/assets/dms_training/images/training-logo.svg"
 app_publisher = "Trojan IT Solutions"
 app_description = "dms training"
 app_email = "dev3@trojanitsolutions.com"
@@ -16,6 +17,7 @@ add_to_apps_screen = [
 		"name": "dms_training",
 		"title": "Training",
 		"route": "/training",
+		"logo": "/assets/dms_training/images/training-logo.svg",
 	}
 ]
 
