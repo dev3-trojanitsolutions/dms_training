@@ -1,0 +1,225 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-16 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "track",
+  "difficulty",
+  "column_break_1",
+  "is_active",
+  "sequence",
+  "passing_score",
+  "section_modes",
+  "allow_watch",
+  "column_break_2",
+  "allow_guided",
+  "column_break_3",
+  "allow_practice",
+  "section_description",
+  "description",
+  "section_steps",
+  "steps",
+  "section_seed",
+  "seed_data",
+  "starter_hash",
+  "starter_synced_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1,
+   "idx": 1
+  },
+  {
+   "fieldname": "track",
+   "fieldtype": "Link",
+   "label": "Track",
+   "options": "Training Track",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "idx": 2
+  },
+  {
+   "fieldname": "difficulty",
+   "fieldtype": "Select",
+   "label": "Difficulty",
+   "options": "Beginner\nIntermediate\nAdvanced",
+   "default": "Beginner",
+   "in_list_view": 1,
+   "idx": 3
+  },
+  {
+   "fieldname": "column_break_1",
+   "fieldtype": "Column Break",
+   "idx": 4
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Active",
+   "default": "1",
+   "in_list_view": 1,
+   "idx": 5
+  },
+  {
+   "fieldname": "sequence",
+   "fieldtype": "Int",
+   "label": "Sequence",
+   "idx": 6
+  },
+  {
+   "fieldname": "passing_score",
+   "fieldtype": "Int",
+   "label": "Passing Score",
+   "default": "70",
+   "description": "Out of 100.",
+   "idx": 7
+  },
+  {
+   "fieldname": "section_modes",
+   "fieldtype": "Section Break",
+   "label": "Modes",
+   "idx": 8
+  },
+  {
+   "fieldname": "allow_watch",
+   "fieldtype": "Check",
+   "label": "Allow Watch",
+   "default": "1",
+   "description": "The simulator plays every step itself.",
+   "idx": 9
+  },
+  {
+   "fieldname": "column_break_2",
+   "fieldtype": "Column Break",
+   "idx": 10
+  },
+  {
+   "fieldname": "allow_guided",
+   "fieldtype": "Check",
+   "label": "Allow Guided",
+   "default": "1",
+   "description": "The trainee clicks, with each step highlighted.",
+   "idx": 11
+  },
+  {
+   "fieldname": "column_break_3",
+   "fieldtype": "Column Break",
+   "idx": 12
+  },
+  {
+   "fieldname": "allow_practice",
+   "fieldtype": "Check",
+   "label": "Allow Practice",
+   "default": "1",
+   "description": "No highlights. Hints cost points.",
+   "idx": 13
+  },
+  {
+   "fieldname": "section_description",
+   "fieldtype": "Section Break",
+   "idx": 14
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description",
+   "idx": 15
+  },
+  {
+   "fieldname": "section_steps",
+   "fieldtype": "Section Break",
+   "label": "Steps",
+   "idx": 16
+  },
+  {
+   "fieldname": "steps",
+   "fieldtype": "Table",
+   "label": "Steps",
+   "options": "Training Step",
+   "reqd": 1,
+   "idx": 17
+  },
+  {
+   "fieldname": "section_seed",
+   "fieldtype": "Section Break",
+   "label": "Sample Data",
+   "collapsible": 1,
+   "idx": 18
+  },
+  {
+   "fieldname": "seed_data",
+   "fieldtype": "Code",
+   "label": "Sample Data (JSON)",
+   "options": "JSON",
+   "description": "Optional. Replaces parts of the default sample data: <code>customers</code>, <code>items</code>, <code>warehouses</code>, <code>sales_orders</code>, <code>settings</code>. Leave empty to use the defaults.",
+   "idx": 19
+  },
+  {
+   "fieldname": "starter_hash",
+   "fieldtype": "Data",
+   "label": "Starter Content Version",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "idx": 20
+  },
+  {
+   "fieldname": "starter_synced_on",
+   "fieldtype": "Datetime",
+   "label": "Starter Content Synced On",
+   "hidden": 1,
+   "read_only": 1,
+   "no_copy": 1,
+   "idx": 21
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-16 17:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "dms training",
+ "name": "Training Scenario",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  },
+  {
+   "role": "Sales Manager",
+   "read": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "sort_field": "sequence",
+ "sort_order": "ASC",
+ "states": [],
+ "autoname": "field:title",
+ "naming_rule": "By fieldname",
+ "title_field": "title"
+}

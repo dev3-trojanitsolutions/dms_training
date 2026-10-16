@@ -11,15 +11,13 @@ app_license = "mit"
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "dms_training",
-# 		"logo": "/assets/dms_training/logo.png",
-# 		"title": "dms training",
-# 		"route": "/dms_training",
-# 		"has_permission": "dms_training.api.permission.has_app_permission",
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "dms_training",
+		"title": "Training",
+		"route": "/training",
+	}
+]
 
 # The dock, the rail down the left of the desk, is a document rather than a hook. Author it in
 # Manage Dock on a developer-mode site and press Export to App, and it is written to
@@ -96,7 +94,8 @@ app_license = "mit"
 # ------------
 
 # before_install = "dms_training.install.before_install"
-# after_install = "dms_training.install.after_install"
+after_install = "dms_training.setup.install.after_install"
+after_migrate = "dms_training.setup.install.after_migrate"
 
 # Uninstallation
 # ------------
@@ -272,3 +271,8 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+
+# The /training single-page app. Every path under it serves the same shell.
+website_route_rules = [
+	{"from_route": "/training/<path:app_path>", "to_route": "training"},
+]

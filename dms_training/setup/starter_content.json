@@ -1,0 +1,2726 @@
+{
+ "tracks": [
+  {
+   "title": "Sales Rep",
+   "sequence": 10,
+   "description": "Book Sales Orders from the field sales portal, save orders as pending, and deal with credit and stock warnings.",
+   "roles": [
+    "Sales Rep"
+   ]
+  },
+  {
+   "title": "Store Keeper & Delivery",
+   "sequence": 20,
+   "description": "Create Delivery Notes from Sales Orders in Desk, pick up and deliver them in the delivery portal, and handle partial deliveries.",
+   "roles": [
+    "Delivery Partner",
+    "Stock User"
+   ]
+  },
+  {
+   "title": "Sales Manager",
+   "sequence": 30,
+   "description": "Watch the order book in the DMS reports, fix an order that was delivered without an invoice, and record a customer's payment in Desk.",
+   "roles": [
+    "Sales Manager",
+    "Accounts Manager",
+    "Accounts User"
+   ]
+  }
+ ],
+ "scenarios": [
+  {
+   "title": "Book a Standard Sales Order",
+   "track": "Sales Rep",
+   "sequence": 10,
+   "difficulty": "Beginner",
+   "description": "Pick a customer, add items, apply a discount and submit the order. Then find it in Order History.",
+   "steps": [
+    {
+     "title": "Your sales dashboard",
+     "screen": "portal.sales_home",
+     "target": "home.stats",
+     "action_type": "Observe",
+     "body": "<p>This is the <b>Sales Rep home page</b> (/sales-home). The cards show today's sales and the orders <b>you</b> created. You only ever see your own orders.</p>"
+    },
+    {
+     "title": "Open Customers",
+     "screen": "portal.sales_home",
+     "target": "nav.customers",
+     "action_type": "Click",
+     "body": "<p>Every order starts with a customer. Click <b>Customers</b> in the sidebar.</p>",
+     "hint": "It is the second link in the left sidebar.",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_customer"
+    },
+    {
+     "title": "Search for the customer",
+     "screen": "portal.sales_customer",
+     "target": "customer.search",
+     "action_type": "Enter Value",
+     "body": "<p>Type <b>Gulf</b> to find <i>Gulf Office Supplies</i>. You can search by name, ID or mobile number.</p>",
+     "auto_value": "Gulf"
+    },
+    {
+     "title": "Open the customer",
+     "screen": "portal.sales_customer",
+     "target": "customer.open:CUST-0001",
+     "action_type": "Click",
+     "body": "<p>Click the <b>Gulf Office Supplies</b> card to see its details, credit and addresses.</p>",
+     "expected_field": "ui.customer_detail",
+     "expected_value": "CUST-0001"
+    },
+    {
+     "title": "Start a new order",
+     "screen": "portal.sales_customer",
+     "target": "customer.new_order",
+     "action_type": "Click",
+     "body": "<p>Click <b>New Order</b>. The order form opens with this customer already filled in.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_order"
+    },
+    {
+     "title": "Check the address",
+     "screen": "portal.sales_order",
+     "target": "order.billing_address",
+     "action_type": "Observe",
+     "body": "<p>The billing address comes from the customer. The shipping address is the same as billing unless you untick <b>Same as Billing Address</b>.</p>"
+    },
+    {
+     "title": "Choose the warehouse",
+     "screen": "portal.sales_order",
+     "target": "order.warehouse",
+     "action_type": "Select Option",
+     "body": "<p>Select <b>Main Store - LS</b>. The stock shown on each item is for the warehouse you pick, and the order ships from there.</p>",
+     "hint": "The Warehouse select is under the categories on the left.",
+     "expected_field": "cart.warehouse",
+     "expected_value": "Main Store - LS",
+     "auto_value": "Main Store - LS"
+    },
+    {
+     "title": "Add a pen",
+     "screen": "portal.sales_order",
+     "target": "order.add:PEN-BLU-01",
+     "action_type": "Click",
+     "body": "<p>Click <b>Add</b> on <i>Signature Blue Ballpoint Pen</i>. It goes into the order summary on the right.</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Set the quantity",
+     "screen": "portal.sales_order",
+     "target": "order.qty:PEN-BLU-01",
+     "action_type": "Enter Value",
+     "body": "<p>The customer wants <b>50</b> pens. Change the quantity in the order summary to 50.</p>",
+     "expected_field": "cart.qty.PEN-BLU-01",
+     "expected_value": "50",
+     "auto_value": "50"
+    },
+    {
+     "title": "Add a journal",
+     "screen": "portal.sales_order",
+     "target": "order.add:NB-A5-01",
+     "action_type": "Click",
+     "body": "<p>Also add one <b>Leather Journal A5</b>.</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=2"
+    },
+    {
+     "title": "Choose a discount type",
+     "screen": "portal.sales_order",
+     "target": "order.discount_type",
+     "action_type": "Select Option",
+     "body": "<p>Discounts are optional. Choose <b>Percentage</b> to give the customer a percentage off the whole order.</p>",
+     "expected_field": "cart.discount_type",
+     "expected_value": "Percentage",
+     "auto_value": "Percentage"
+    },
+    {
+     "title": "Enter the discount",
+     "screen": "portal.sales_order",
+     "target": "order.discount_value",
+     "action_type": "Enter Value",
+     "body": "<p>Enter <b>5</b> for a 5% discount.</p>",
+     "expected_field": "cart.discount_value",
+     "expected_value": "5",
+     "auto_value": "5"
+    },
+    {
+     "title": "Review the totals",
+     "screen": "portal.sales_order",
+     "target": "order.totals",
+     "action_type": "Observe",
+     "body": "<p>Check the <b>Subtotal</b>, the <b>Discount</b> and the <b>Grand total</b> before you submit. Tax is added on the real system.</p>"
+    },
+    {
+     "title": "Set the delivery date",
+     "screen": "portal.sales_order",
+     "target": "order.delivery_date",
+     "action_type": "Enter Value",
+     "body": "<p>Pick a delivery date two days from today. It can't be before the order date.</p>",
+     "auto_value": "today+2"
+    },
+    {
+     "title": "Submit the order",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Sales Order</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Submitting commits stock and can't be undone, so the portal asks you to confirm. Click <b>Submit</b>.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "success"
+    },
+    {
+     "title": "Order submitted",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>The order is booked and shows in the store keeper's Sales Order list. Click <b>OK</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_customer"
+    },
+    {
+     "title": "Open Order History",
+     "screen": "portal.sales_customer",
+     "target": "nav.order_history",
+     "action_type": "Click",
+     "body": "<p>After submitting you are back on the customer. Click <b>Order History</b> to find your order.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.order_history"
+    },
+    {
+     "title": "Your order",
+     "screen": "portal.order_history",
+     "target": "history.row:@last_so",
+     "action_type": "Observe",
+     "body": "<p>Here is your order with status <b>To Deliver and Bill</b>. Next, the store keeper makes the draft Sales Invoice and the Delivery Note in Desk, and a delivery partner delivers it. Well done!</p>"
+    }
+   ]
+  },
+  {
+   "title": "Save as Pending and Submit Later",
+   "track": "Sales Rep",
+   "sequence": 20,
+   "difficulty": "Beginner",
+   "description": "The customer isn't ready to confirm. Save the order as pending, change it later from Pending Orders, then submit it.",
+   "steps": [
+    {
+     "title": "Start a new order",
+     "screen": "portal.sales_home",
+     "target": "nav.new_order",
+     "action_type": "Click",
+     "body": "<p>Click <b>New Order</b> in the sidebar. It opens the customer list, because every order needs a customer first.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_customer"
+    },
+    {
+     "title": "Pick the customer",
+     "screen": "portal.sales_customer",
+     "target": "customer.open:CUST-0004",
+     "action_type": "Click",
+     "body": "<p>Open <b>Corniche Corporate Services</b>.</p>",
+     "expected_field": "ui.customer_detail",
+     "expected_value": "CUST-0004"
+    },
+    {
+     "title": "New order for this customer",
+     "screen": "portal.sales_customer",
+     "target": "customer.new_order",
+     "action_type": "Click",
+     "body": "<p>Click <b>New Order</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_order"
+    },
+    {
+     "title": "Choose the warehouse",
+     "screen": "portal.sales_order",
+     "target": "order.warehouse",
+     "action_type": "Select Option",
+     "body": "<p>Select <b>Main Store - LS</b>.</p>",
+     "expected_field": "cart.warehouse",
+     "expected_value": "Main Store - LS",
+     "auto_value": "Main Store - LS"
+    },
+    {
+     "title": "Add copy paper",
+     "screen": "portal.sales_order",
+     "target": "order.add:PPR-A4-01",
+     "action_type": "Click",
+     "body": "<p>Add <b>A4 Copy Paper (Ream)</b>.</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Set the quantity",
+     "screen": "portal.sales_order",
+     "target": "order.qty:PPR-A4-01",
+     "action_type": "Enter Value",
+     "body": "<p>Change the quantity to <b>20</b>.</p>",
+     "expected_field": "cart.qty.PPR-A4-01",
+     "expected_value": "20",
+     "auto_value": "20"
+    },
+    {
+     "title": "Save as pending",
+     "screen": "portal.sales_order",
+     "target": "order.save",
+     "action_type": "Click",
+     "body": "<p>The customer wants to check the quantity with their office. Instead of submitting, click <b>Save</b>. This keeps the order as a draft.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b>. A pending order doesn't reserve stock and isn't sent to the warehouse.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "saved"
+    },
+    {
+     "title": "Saved",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>Click <b>OK</b>. The portal takes you to Pending Orders.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.pending_orders"
+    },
+    {
+     "title": "Your pending order",
+     "screen": "portal.pending_orders",
+     "target": "pending.row:@last_so",
+     "action_type": "Observe",
+     "body": "<p>Your draft is listed here. It stays here until you submit or discard it.</p>"
+    },
+    {
+     "title": "Reopen the order",
+     "screen": "portal.pending_orders",
+     "target": "pending.action:@last_so",
+     "action_type": "Select Option",
+     "body": "<p>The customer called back. Open <b>Select Action</b> on your order and choose <b>Reopen</b> to change it.</p>",
+     "hint": "Submit would book it as it is, and Discard would delete it. Choose Reopen.",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_order",
+     "auto_value": "reopen"
+    },
+    {
+     "title": "Change the quantity",
+     "screen": "portal.sales_order",
+     "target": "order.qty:PPR-A4-01",
+     "action_type": "Enter Value",
+     "body": "<p>They now want <b>30</b> reams. Change the quantity to 30.</p>",
+     "expected_field": "cart.qty.PPR-A4-01",
+     "expected_value": "30",
+     "auto_value": "30"
+    },
+    {
+     "title": "Add a stapler",
+     "screen": "portal.sales_order",
+     "target": "order.add:OFF-STP-01",
+     "action_type": "Click",
+     "body": "<p>They also want a <b>Heavy Duty Stapler</b>. Add it.</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=2"
+    },
+    {
+     "title": "Submit the order",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Now the customer has confirmed. Click <b>Submit Sales Order</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit</b>.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "success"
+    },
+    {
+     "title": "Submitted",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>The same order was submitted, so no duplicate was created. Click <b>OK</b>.</p>",
+     "expected_field": "alert.open",
+     "expected_value": "false"
+    },
+    {
+     "title": "Check Pending Orders",
+     "screen": "portal.sales_customer",
+     "target": "nav.pending_orders",
+     "action_type": "Click",
+     "body": "<p>Open <b>Pending Orders</b> again.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.pending_orders"
+    },
+    {
+     "title": "Gone from pending",
+     "screen": "portal.pending_orders",
+     "target": "pending.table",
+     "action_type": "Observe",
+     "body": "<p>The order isn't pending any more. It is in <b>Order History</b> now. Tip: if nothing needs to change, choose <b>Submit</b> in Select Action to submit a pending order straight from this list.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Credit Limit Warning",
+   "track": "Sales Rep",
+   "sequence": 30,
+   "difficulty": "Intermediate",
+   "description": "The customer has little credit left. See the warning, see why submit is blocked, and reduce the order so it fits.",
+   "steps": [
+    {
+     "title": "Open Customers",
+     "screen": "portal.sales_home",
+     "target": "nav.customers",
+     "action_type": "Click",
+     "body": "<p>Click <b>Customers</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_customer"
+    },
+    {
+     "title": "Open Al Noor Trading",
+     "screen": "portal.sales_customer",
+     "target": "customer.open:CUST-0002",
+     "action_type": "Click",
+     "body": "<p>Open <b>Al Noor Trading</b>.</p>",
+     "expected_field": "ui.customer_detail",
+     "expected_value": "CUST-0002"
+    },
+    {
+     "title": "Check the credit",
+     "screen": "portal.sales_customer",
+     "target": "customer.credit",
+     "action_type": "Observe",
+     "body": "<p>The credit limit is QAR 5,000 and QAR 4,200 is still unpaid. That leaves only <b>QAR 800</b> of available credit. Check this before you promise a big order.</p>"
+    },
+    {
+     "title": "Start the order",
+     "screen": "portal.sales_customer",
+     "target": "customer.new_order",
+     "action_type": "Click",
+     "body": "<p>Click <b>New Order</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_order"
+    },
+    {
+     "title": "Choose the warehouse",
+     "screen": "portal.sales_order",
+     "target": "order.warehouse",
+     "action_type": "Select Option",
+     "body": "<p>Select <b>Main Store - LS</b>.</p>",
+     "expected_field": "cart.warehouse",
+     "expected_value": "Main Store - LS",
+     "auto_value": "Main Store - LS"
+    },
+    {
+     "title": "Add fountain pens",
+     "screen": "portal.sales_order",
+     "target": "order.add:PEN-FTN-02",
+     "action_type": "Click",
+     "body": "<p>The customer asks for fountain pens. Add <b>Classic Fountain Pen</b> (QAR 185 each).</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Ask for 6 pens",
+     "screen": "portal.sales_order",
+     "target": "order.qty:PEN-FTN-02",
+     "action_type": "Enter Value",
+     "body": "<p>They want <b>6</b>. Change the quantity to 6.</p>",
+     "expected_field": "cart.qty.PEN-FTN-02",
+     "expected_value": "6",
+     "auto_value": "6"
+    },
+    {
+     "title": "The credit warning",
+     "screen": "portal.sales_order",
+     "target": "order.credit",
+     "action_type": "Observe",
+     "body": "<p>6 × 185 = QAR 1,110, which is more than the QAR 800 available. The order summary shows <b>Order exceeds available credit</b>.</p>"
+    },
+    {
+     "title": "Try to submit",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Sales Order</b> to see what happens.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "credit"
+    },
+    {
+     "title": "Blocked",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>The portal blocks orders over the available credit. Either the customer pays their outstanding balance first, or the order is reduced. Click <b>OK</b>.</p>",
+     "expected_field": "alert.open",
+     "expected_value": "false"
+    },
+    {
+     "title": "Reduce the order",
+     "screen": "portal.sales_order",
+     "target": "order.qty:PEN-FTN-02",
+     "action_type": "Enter Value",
+     "body": "<p>The customer agrees to take <b>4</b> now (QAR 740). Change the quantity to 4. The warning goes away.</p>",
+     "hint": "Any quantity of 4 or less fits within QAR 800.",
+     "expected_field": "cart.exceeds_credit",
+     "expected_value": "false",
+     "auto_value": "4"
+    },
+    {
+     "title": "Submit",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Sales Order</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit</b>.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "success"
+    },
+    {
+     "title": "Done",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>The order is within credit and has been submitted. Tell your manager about the rest of the order, so it can be booked once the customer pays. Click <b>OK</b>.</p>",
+     "expected_field": "alert.open",
+     "expected_value": "false"
+    }
+   ]
+  },
+  {
+   "title": "Not Enough Stock",
+   "track": "Sales Rep",
+   "sequence": 40,
+   "difficulty": "Intermediate",
+   "description": "The chosen warehouse doesn't have enough stock. Read the error and ship from another warehouse.",
+   "steps": [
+    {
+     "title": "Open Customers",
+     "screen": "portal.sales_home",
+     "target": "nav.customers",
+     "action_type": "Click",
+     "body": "<p>Click <b>Customers</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_customer"
+    },
+    {
+     "title": "Open Gulf Office Supplies",
+     "screen": "portal.sales_customer",
+     "target": "customer.open:CUST-0001",
+     "action_type": "Click",
+     "body": "<p>Open <b>Gulf Office Supplies</b>.</p>",
+     "expected_field": "ui.customer_detail",
+     "expected_value": "CUST-0001"
+    },
+    {
+     "title": "Start the order",
+     "screen": "portal.sales_customer",
+     "target": "customer.new_order",
+     "action_type": "Click",
+     "body": "<p>Click <b>New Order</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "portal.sales_order"
+    },
+    {
+     "title": "Choose Main Store",
+     "screen": "portal.sales_order",
+     "target": "order.warehouse",
+     "action_type": "Select Option",
+     "body": "<p>Select <b>Main Store - LS</b>.</p>",
+     "expected_field": "cart.warehouse",
+     "expected_value": "Main Store - LS",
+     "auto_value": "Main Store - LS"
+    },
+    {
+     "title": "Check the stock",
+     "screen": "portal.sales_order",
+     "target": "order.item:OFF-DSK-03",
+     "action_type": "Observe",
+     "body": "<p>Look at <b>Executive Desk Organizer</b>. The card shows only <b>3</b> in stock at Main Store.</p>"
+    },
+    {
+     "title": "Add the organizer",
+     "screen": "portal.sales_order",
+     "target": "order.add:OFF-DSK-03",
+     "action_type": "Click",
+     "body": "<p>Click <b>Add</b>.</p>",
+     "expected_field": "cart.count",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Ask for 5",
+     "screen": "portal.sales_order",
+     "target": "order.qty:OFF-DSK-03",
+     "action_type": "Enter Value",
+     "body": "<p>The customer wants <b>5</b>. Change the quantity to 5.</p>",
+     "expected_field": "cart.qty.OFF-DSK-03",
+     "expected_value": "5",
+     "auto_value": "5"
+    },
+    {
+     "title": "Submit",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Sales Order</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit</b>.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "stock"
+    },
+    {
+     "title": "Insufficient stock",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>The system checks stock when you submit and blocks the order: 5 requested, 3 available. Nothing was booked. Click <b>OK</b>.</p>",
+     "expected_field": "alert.open",
+     "expected_value": "false"
+    },
+    {
+     "title": "Ship from the Showroom",
+     "screen": "portal.sales_order",
+     "target": "order.warehouse",
+     "action_type": "Select Option",
+     "body": "<p>The <b>Showroom - LS</b> has 6 in stock. Change the warehouse to Showroom. The stock on the item cards updates.</p>",
+     "expected_field": "cart.warehouse",
+     "expected_value": "Showroom - LS",
+     "auto_value": "Showroom - LS"
+    },
+    {
+     "title": "Submit again",
+     "screen": "portal.sales_order",
+     "target": "order.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Sales Order</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "portal.sales_order",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit</b>.</p>",
+     "expected_field": "alert.kind",
+     "expected_value": "success"
+    },
+    {
+     "title": "Done",
+     "screen": "portal.sales_order",
+     "target": "alert.ok",
+     "action_type": "Click",
+     "body": "<p>Booked from the Showroom. If no warehouse has enough stock, book what's available and tell the customer when the rest will come. Click <b>OK</b>.</p>",
+     "expected_field": "alert.open",
+     "expected_value": "false"
+    }
+   ]
+  },
+  {
+   "title": "Create a Delivery Note in Desk",
+   "track": "Store Keeper & Delivery",
+   "sequence": 10,
+   "difficulty": "Beginner",
+   "description": "As the store keeper, make a draft Sales Invoice from a submitted Sales Order, then a draft Delivery Note for the delivery partners to pick up.",
+   "steps": [
+    {
+     "title": "Sales Orders to deliver",
+     "screen": "desk.so_list",
+     "target": "desk.so_list.table",
+     "action_type": "Observe",
+     "body": "<p>You are the <b>store keeper</b>. This is the <b>Sales Order</b> list in Desk (Selling ▸ Sales Order). Orders that still need goods sent show <b>To Deliver and Bill</b>, and the <b>% Delivered</b> bar is empty.</p>"
+    },
+    {
+     "title": "Open the Sales Order",
+     "screen": "desk.so_list",
+     "target": "desk.so_row:SAL-ORD-2026-00101",
+     "action_type": "Click",
+     "body": "<p>Open <b>SAL-ORD-2026-00101</b> for Gulf Office Supplies.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "Check the items",
+     "screen": "desk.so_form",
+     "target": "desk.so.items",
+     "action_type": "Observe",
+     "body": "<p>The order is for 100 notebooks and 20 packs of gel pens, shipped from Main Store. <b>To Deliver and Bill</b> means nothing is delivered or invoiced yet.</p>"
+    },
+    {
+     "title": "Open the Create menu",
+     "screen": "desk.so_form",
+     "target": "desk.create",
+     "action_type": "Click",
+     "body": "<p>First you make the Sales Invoice. Click <b>Create</b>.</p>",
+     "expected_field": "ui.desk_menu",
+     "expected_value": "create"
+    },
+    {
+     "title": "Create the Sales Invoice",
+     "screen": "desk.so_form",
+     "target": "desk.create.sales_invoice",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Sales Invoice</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.si_form"
+    },
+    {
+     "title": "Same as the order",
+     "screen": "desk.si_form",
+     "target": "desk.si.items",
+     "action_type": "Observe",
+     "body": "<p>ERPNext copied the order: the same items, quantities and rates. <b>Leave the quantities as they are.</b></p>"
+    },
+    {
+     "title": "Save as draft",
+     "screen": "desk.si_form",
+     "target": "desk.si.save",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b> (or press Ctrl+S).</p>",
+     "expected_field": "desk_si.saved",
+     "expected_value": "true"
+    },
+    {
+     "title": "A draft invoice",
+     "screen": "desk.si_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>The invoice is saved as <b>Draft</b> ACC-SINV-2026-00001. <b>Don't submit it.</b> When the delivery partner submits the Delivery Note, the invoice quantities are set to what was delivered, and it is submitted automatically once everything is delivered.</p>"
+    },
+    {
+     "title": "Open Connections",
+     "screen": "desk.si_form",
+     "target": "desk.tab:Connections",
+     "action_type": "Click",
+     "body": "<p>Now go back to the Sales Order from the invoice. Click the <b>Connections</b> tab: it lists every document linked to this invoice.</p>"
+    },
+    {
+     "title": "Back to the Sales Order",
+     "screen": "desk.si_form",
+     "target": "desk.si.so_link:SAL-ORD-2026-00101",
+     "action_type": "Click",
+     "body": "<p>Under <b>Reference ▸ Sales Order</b>, click <b>SAL-ORD-2026-00101</b> to open the order again.</p>",
+     "hint": "The Sales Order link is in the Reference column of the Connections tab.",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "The order's Connections",
+     "screen": "desk.so_form",
+     "target": "desk.tab:Connections",
+     "action_type": "Click",
+     "body": "<p>You are back on the Sales Order. Click its <b>Connections</b> tab.</p>"
+    },
+    {
+     "title": "The invoice is linked",
+     "screen": "desk.so_form",
+     "target": "desk.so.si_link:ACC-SINV-2026-00001",
+     "action_type": "Observe",
+     "body": "<p>The draft invoice <b>ACC-SINV-2026-00001</b> is now linked to this order under <b>Sales Invoice</b>. The Delivery Note you make next will show up here too.</p>"
+    },
+    {
+     "title": "Open the Create menu",
+     "screen": "desk.so_form",
+     "target": "desk.create",
+     "action_type": "Click",
+     "body": "<p>Now the Delivery Note. Click <b>Create</b>.</p>",
+     "expected_field": "ui.desk_menu",
+     "expected_value": "create"
+    },
+    {
+     "title": "Create the Delivery Note",
+     "screen": "desk.so_form",
+     "target": "desk.create.delivery_note",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Delivery Note</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.dn_form"
+    },
+    {
+     "title": "What was copied",
+     "screen": "desk.dn_form",
+     "target": "desk.dn.items",
+     "action_type": "Observe",
+     "body": "<p>ERPNext copied every item still to deliver, linked to the Sales Order. Change a quantity only if you are sending less than ordered.</p>"
+    },
+    {
+     "title": "The source warehouse",
+     "screen": "desk.dn_form",
+     "target": "desk.dn.warehouse",
+     "action_type": "Observe",
+     "body": "<p>The goods leave from this warehouse. It comes from the Sales Order. Change it only if you pick the goods somewhere else.</p>"
+    },
+    {
+     "title": "Save",
+     "screen": "desk.dn_form",
+     "target": "desk.save",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b>.</p>",
+     "expected_field": "desk_dn.saved",
+     "expected_value": "true"
+    },
+    {
+     "title": "Ready for the drivers",
+     "screen": "desk.dn_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>Saved as <b>Draft</b> MAT-DN-2026-00001. <b>Don't submit it and don't assign it here.</b> The delivery partners pick it up themselves in the delivery portal under <b>Delivery Assign</b>, and submit it after the delivery with proof.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Pick Up and Deliver an Order",
+   "track": "Store Keeper & Delivery",
+   "sequence": 20,
+   "difficulty": "Beginner",
+   "description": "As the delivery partner, pick up an unassigned Delivery Note, add proof of delivery and submit it. The invoice is completed automatically.",
+   "seed_data": {
+    "sales_invoices": [
+     {
+      "name": "ACC-SINV-2026-00001",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "sales_order": "SAL-ORD-2026-00101",
+      "posting_date": "today",
+      "due_date": "today",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2500,
+      "docstatus": 0,
+      "status": "Draft"
+     }
+    ],
+    "delivery_notes": [
+     {
+      "name": "MAT-DN-2026-00001",
+      "sales_order": "SAL-ORD-2026-00101"
+     }
+    ],
+    "next_si": 2,
+    "next_dn": 2
+   },
+   "steps": [
+    {
+     "title": "Your delivery dashboard",
+     "screen": "delivery.home",
+     "target": "dhome.stats",
+     "action_type": "Observe",
+     "body": "<p>You are the <b>delivery partner</b>. <b>Pending</b> counts the notes assigned to you. <b>Open Deliveries</b> counts the notes nobody has picked up yet.</p>"
+    },
+    {
+     "title": "Open Delivery Assign",
+     "screen": "delivery.home",
+     "target": "dnav.assign",
+     "action_type": "Click",
+     "body": "<p>Click <b>Delivery Assign</b> in the sidebar.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.assign"
+    },
+    {
+     "title": "Unassigned deliveries",
+     "screen": "delivery.assign",
+     "target": "dassign.unassigned",
+     "action_type": "Observe",
+     "body": "<p>The store keeper saved MAT-DN-2026-00001 for Gulf Office Supplies without assigning it. Any driver can pick it up here.</p>"
+    },
+    {
+     "title": "Pick it up",
+     "screen": "delivery.assign",
+     "target": "dassign.assign:MAT-DN-2026-00001",
+     "action_type": "Click",
+     "body": "<p>Click <b>Assign to Me</b>.</p>",
+     "expected_field": "dns.MAT-DN-2026-00001.mine",
+     "expected_value": "true"
+    },
+    {
+     "title": "It's yours",
+     "screen": "delivery.assign",
+     "target": "dassign.mine",
+     "action_type": "Observe",
+     "body": "<p>The note moved to <b>My Assigned Deliveries</b>. If you can't make the delivery, <b>Unassign</b> hands it back to the other drivers.</p>"
+    },
+    {
+     "title": "Open Pending Deliveries",
+     "screen": "delivery.assign",
+     "target": "dnav.pending",
+     "action_type": "Click",
+     "body": "<p>Click <b>Pending Deliveries</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.pending"
+    },
+    {
+     "title": "Open the delivery",
+     "screen": "delivery.pending",
+     "target": "dpending.open:MAT-DN-2026-00001",
+     "action_type": "Click",
+     "body": "<p>Open the card for MAT-DN-2026-00001.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.note"
+    },
+    {
+     "title": "Customer and address",
+     "screen": "delivery.note",
+     "target": "dnote.summary",
+     "action_type": "Observe",
+     "body": "<p>Here are the phone number and the delivery address. <b>Ordered</b>, <b>Delivered</b> and <b>Remaining</b> update as you change quantities.</p>"
+    },
+    {
+     "title": "Check the items",
+     "screen": "delivery.note",
+     "target": "dnote.items",
+     "action_type": "Observe",
+     "body": "<p>Delivered starts at the full quantity. The customer accepted everything, so leave the quantities as they are.</p>"
+    },
+    {
+     "title": "Try to submit",
+     "screen": "delivery.note",
+     "target": "dnote.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Delivery</b> to see what happens without proof.</p>",
+     "expected_field": "toast.code",
+     "expected_value": "proof_missing"
+    },
+    {
+     "title": "Add proof",
+     "screen": "delivery.note",
+     "target": "dnote.camera",
+     "action_type": "Click",
+     "body": "<p>Proof of delivery is required. Click <b>Camera</b> to take a photo of the signed note or of the goods at the door.</p>",
+     "expected_field": "note.attachments",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Add a remark",
+     "screen": "delivery.note",
+     "target": "dnote.remarks",
+     "action_type": "Enter Value",
+     "body": "<p>Type who received the goods, for example <i>Received by the store manager</i>.</p>",
+     "auto_value": "Received by the store manager"
+    },
+    {
+     "title": "Submit",
+     "screen": "delivery.note",
+     "target": "dnote.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Delivery</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "delivery.note",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Submitting can't be undone. Click <b>OK</b>.</p>",
+     "expected_field": "ui.delivery_success",
+     "expected_value": "true"
+    },
+    {
+     "title": "Delivered",
+     "screen": "delivery.note",
+     "target": "dnote.success",
+     "action_type": "Observe",
+     "body": "<p>Done. Read the note on the screen: because everything was delivered, the draft Sales Invoice was filled in and <b>submitted automatically</b>, and the Sales Order is <b>Completed</b>.</p>"
+    },
+    {
+     "title": "Back to your deliveries",
+     "screen": "delivery.note",
+     "target": "dnote.back",
+     "action_type": "Click",
+     "body": "<p>Click <b>Back to Deliveries</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.completed"
+    },
+    {
+     "title": "Completed deliveries",
+     "screen": "delivery.completed",
+     "target": "dcompleted.list",
+     "action_type": "Observe",
+     "body": "<p>Submitted notes are listed here and are read-only.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Partial Delivery",
+   "track": "Store Keeper & Delivery",
+   "sequence": 30,
+   "difficulty": "Intermediate",
+   "description": "The customer accepts only part of the goods. Deliver what was accepted, then the store keeper makes a Delivery Note for the rest.",
+   "seed_data": {
+    "sales_invoices": [
+     {
+      "name": "ACC-SINV-2026-00001",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "sales_order": "SAL-ORD-2026-00101",
+      "posting_date": "today",
+      "due_date": "today",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2500,
+      "docstatus": 0,
+      "status": "Draft"
+     }
+    ],
+    "delivery_notes": [
+     {
+      "name": "MAT-DN-2026-00001",
+      "sales_order": "SAL-ORD-2026-00101",
+      "assigned_to": "driver.one@luxury.test"
+     }
+    ],
+    "next_si": 2,
+    "next_dn": 2
+   },
+   "steps": [
+    {
+     "title": "Open Pending Deliveries",
+     "screen": "delivery.home",
+     "target": "dnav.pending",
+     "action_type": "Click",
+     "body": "<p>You are the delivery partner. You already picked up MAT-DN-2026-00001 under Delivery Assign. Click <b>Pending Deliveries</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.pending"
+    },
+    {
+     "title": "Open the delivery",
+     "screen": "delivery.pending",
+     "target": "dpending.open:MAT-DN-2026-00001",
+     "action_type": "Click",
+     "body": "<p>Open MAT-DN-2026-00001.</p>",
+     "expected_field": "screen",
+     "expected_value": "delivery.note"
+    },
+    {
+     "title": "Change the quantity",
+     "screen": "delivery.note",
+     "target": "dnote.qty:PEN-GEL-03",
+     "action_type": "Enter Value",
+     "body": "<p>5 packs of gel pens are damaged and the customer refuses them. Change <b>Gel Pen Black</b> to <b>15</b>. You can also use the − button.</p>",
+     "expected_field": "note.qty.PEN-GEL-03",
+     "expected_value": "15",
+     "auto_value": "15"
+    },
+    {
+     "title": "Partial delivery",
+     "screen": "delivery.note",
+     "target": "dnote.items",
+     "action_type": "Observe",
+     "body": "<p>The item shows <b>Partial Delivery</b>. You can't deliver more than ordered: the portal blocks it.</p>"
+    },
+    {
+     "title": "Remaining",
+     "screen": "delivery.note",
+     "target": "dnote.summary",
+     "action_type": "Observe",
+     "body": "<p><b>Remaining</b> shows the 5 packs that still have to be delivered.</p>"
+    },
+    {
+     "title": "Add proof",
+     "screen": "delivery.note",
+     "target": "dnote.photo",
+     "action_type": "Click",
+     "body": "<p>Click <b>Photo / Gallery</b> to attach a photo.</p>",
+     "expected_field": "note.attachments",
+     "expected_value": ">=1"
+    },
+    {
+     "title": "Explain why",
+     "screen": "delivery.note",
+     "target": "dnote.remarks",
+     "action_type": "Enter Value",
+     "body": "<p>Write why the quantity is lower, so the office knows what happened.</p>",
+     "auto_value": "5 packs of gel pens damaged, customer refused them"
+    },
+    {
+     "title": "Submit",
+     "screen": "delivery.note",
+     "target": "dnote.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit Delivery</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "delivery.note",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>OK</b>.</p>",
+     "expected_field": "ui.delivery_success",
+     "expected_value": "true"
+    },
+    {
+     "title": "The invoice waits",
+     "screen": "delivery.note",
+     "target": "dnote.success",
+     "action_type": "Observe",
+     "body": "<p>Read the note: the draft Sales Invoice now holds the delivered quantities (15 packs instead of 20) but stays a <b>draft</b>, because part of the order is still to deliver.</p>"
+    },
+    {
+     "title": "Back at the office",
+     "screen": "desk.so_list",
+     "target": "desk.so_row:SAL-ORD-2026-00101",
+     "action_type": "Click",
+     "body": "<p>Now you are the <b>store keeper</b> again. The order still shows <b>To Deliver and Bill</b>. Open it.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "Open the gel pen row",
+     "screen": "desk.so_form",
+     "target": "desk.so.row:PEN-GEL-03",
+     "action_type": "Click",
+     "body": "<p>To see what was delivered, open the <b>Gel Pen</b> row: click the ✏️ pencil at the end of the row.</p>"
+    },
+    {
+     "title": "Delivered so far",
+     "screen": "desk.so_form",
+     "target": "desk.so.row_delivered",
+     "action_type": "Observe",
+     "body": "<p><b>Delivered Qty</b> is 15 of 20. ERPNext tracks this per item from the submitted Delivery Notes.</p>"
+    },
+    {
+     "title": "Open the Create menu",
+     "screen": "desk.so_form",
+     "target": "desk.create",
+     "action_type": "Click",
+     "body": "<p>Click <b>Create</b>.</p>",
+     "expected_field": "ui.desk_menu",
+     "expected_value": "create"
+    },
+    {
+     "title": "A note for the rest",
+     "screen": "desk.so_form",
+     "target": "desk.create.delivery_note",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Delivery Note</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.dn_form"
+    },
+    {
+     "title": "Only what is left",
+     "screen": "desk.dn_form",
+     "target": "desk.dn.items",
+     "action_type": "Observe",
+     "body": "<p>ERPNext copied only the <b>5 packs</b> still to deliver.</p>"
+    },
+    {
+     "title": "Save",
+     "screen": "desk.dn_form",
+     "target": "desk.save",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b>.</p>",
+     "expected_field": "desk_dn.saved",
+     "expected_value": "true"
+    },
+    {
+     "title": "Ready for a driver",
+     "screen": "desk.dn_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>MAT-DN-2026-00002 is a draft for the remaining 5 packs. A driver picks it up under <b>Delivery Assign</b>. When it is delivered, the draft invoice is submitted and the Sales Order becomes <b>Completed</b>.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Check the Order Book",
+   "track": "Sales Manager",
+   "sequence": 10,
+   "difficulty": "Beginner",
+   "description": "Use the Sales Order Status report in DMS to see which orders are waiting for delivery, which are overdue, and what a customer's order looks like.",
+   "seed_data": {
+    "settings": {
+     "desk_user_name": "Training Manager"
+    },
+    "sales_orders": [
+     {
+      "name": "SAL-ORD-2026-00097",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-5",
+      "delivery_date": "today-4",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 30,
+        "rate": 24,
+        "amount": 720,
+        "delivered_qty": 30
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "qty": 4,
+        "rate": 65,
+        "amount": 260,
+        "delivered_qty": 4
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00098",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "transaction_date": "today-9",
+      "delivery_date": "today-7",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 40
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 10
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "Completed",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00099",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "transaction_date": "today-12",
+      "delivery_date": "today-8",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00100",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "transaction_date": "today-2",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 30,
+        "rate": 18,
+        "amount": 540,
+        "delivered_qty": 20
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00101",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-3",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     }
+    ],
+    "sales_invoices": [
+     {
+      "name": "ACC-SINV-2026-00001",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "due_date": "today+23",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 1510,
+      "docstatus": 1,
+      "status": "Unpaid"
+     },
+     {
+      "name": "ACC-SINV-2026-00002",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-12",
+      "due_date": "today-12",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2300,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00003",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-2",
+      "due_date": "today-2",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 20,
+        "rate": 18,
+        "amount": 360,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 360,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00004",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "sales_order": "SAL-ORD-2026-00101",
+      "posting_date": "today-3",
+      "due_date": "today-3",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2500,
+      "docstatus": 0,
+      "status": "Draft"
+     }
+    ],
+    "delivery_notes": [
+     {
+      "name": "MAT-DN-2026-00001",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 40,
+        "qty": 40,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "uom": "Pack",
+        "ordered_qty": 10,
+        "qty": 10,
+        "rate": 55
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00002",
+      "sales_order": "SAL-ORD-2026-00097",
+      "posting_date": "today-4",
+      "assigned_to": "driver.two@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 30,
+        "qty": 30,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "uom": "Nos",
+        "ordered_qty": 4,
+        "qty": 4,
+        "rate": 65
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00003",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-1",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "uom": "Nos",
+        "ordered_qty": 30,
+        "qty": 20,
+        "rate": 18
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "remarks": "Customer had room for 20 only",
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00004",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-8",
+      "assigned_to": "driver.two@luxury.test"
+     }
+    ],
+    "next_so": 103,
+    "next_si": 5,
+    "next_dn": 5,
+    "next_pe": 1
+   },
+   "steps": [
+    {
+     "title": "The summary cards",
+     "screen": "dms.so_status",
+     "target": "dms.cards",
+     "action_type": "Observe",
+     "body": "<p>This is <b>Sales Order Status</b> in the DMS app (<b>/dms</b>). There is one row per submitted Sales Order, and each card counts the orders in one state.</p>"
+    },
+    {
+     "title": "Orders waiting for delivery",
+     "screen": "dms.so_status",
+     "target": "dms.card:pending_delivery",
+     "action_type": "Click",
+     "body": "<p>Click the <b>Pending Delivery</b> card. Clicking a card filters the table to those orders.</p>",
+     "expected_field": "so_status.card",
+     "expected_value": "pending_delivery"
+    },
+    {
+     "title": "Partly delivered",
+     "screen": "dms.so_status",
+     "target": "dms.so_cell:SAL-ORD-2026-00100/delivery_status",
+     "action_type": "Observe",
+     "body": "<p>SAL-ORD-2026-00100 is <b>Partly Delivered</b>. The customer took 20 of 30 notebooks, so <b>Pending Delivery Qty</b> shows 10.</p>"
+    },
+    {
+     "title": "Late deliveries",
+     "screen": "dms.so_status",
+     "target": "dms.card:overdue",
+     "action_type": "Click",
+     "body": "<p>Now click <b>Overdue Deliveries</b>.</p>",
+     "expected_field": "so_status.card",
+     "expected_value": "overdue"
+    },
+    {
+     "title": "Days overdue",
+     "screen": "dms.so_status",
+     "target": "dms.so_cell:SAL-ORD-2026-00099/days_overdue",
+     "action_type": "Observe",
+     "body": "<p>Pearl School's order was due 8 days ago and nothing has left the store. <b>Days Overdue</b> counts from the expected delivery date. Follow this up with the store keeper.</p>"
+    },
+    {
+     "title": "Back to all orders",
+     "screen": "dms.so_status",
+     "target": "dms.card:total",
+     "action_type": "Click",
+     "body": "<p>Click <b>Total Sales Orders</b> to clear the card filter.</p>",
+     "expected_field": "so_status.card",
+     "expected_value": "total"
+    },
+    {
+     "title": "Find a customer",
+     "screen": "dms.so_status",
+     "target": "dms.filter.customer",
+     "action_type": "Click",
+     "body": "<p>Gulf Office Supplies calls about their order. Click the <b>Customer</b> filter.</p>",
+     "expected_field": "picker",
+     "expected_value": "customer"
+    },
+    {
+     "title": "Pick the customer",
+     "screen": "dms.so_status",
+     "target": "dms.pick:CUST-0001",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Gulf Office Supplies</b>. You can also type part of the name to narrow the list.</p>",
+     "expected_field": "so_status.filters.customer",
+     "expected_value": "CUST-0001"
+    },
+    {
+     "title": "Their orders",
+     "screen": "dms.so_status",
+     "target": "dms.table",
+     "action_type": "Observe",
+     "body": "<p>Gulf Office Supplies has two orders. SAL-ORD-2026-00101 is not delivered yet. SAL-ORD-2026-00097 was delivered but has no invoice. The next scenario fixes that one.</p>"
+    },
+    {
+     "title": "Linked documents",
+     "screen": "dms.so_status",
+     "target": "dms.so_info:SAL-ORD-2026-00101",
+     "action_type": "Click",
+     "body": "<p>In the <b>Sales Invoices</b> column of SAL-ORD-2026-00101, click the <b>ⓘ</b> icon.</p>",
+     "expected_field": "so_status.details",
+     "expected_value": "SAL-ORD-2026-00101"
+    },
+    {
+     "title": "The draft invoice",
+     "screen": "dms.so_status",
+     "target": "dms.details.sales_invoices",
+     "action_type": "Observe",
+     "body": "<p>The store keeper saved ACC-SINV-2026-00004 as a <b>Draft</b>. It has no outstanding amount yet: it is submitted automatically when the goods are delivered.</p>"
+    },
+    {
+     "title": "Close",
+     "screen": "dms.so_status",
+     "target": "dms.details.close",
+     "action_type": "Click",
+     "body": "<p>Close the dialog.</p>"
+    },
+    {
+     "title": "Open the order",
+     "screen": "dms.so_status",
+     "target": "dms.so_link:SAL-ORD-2026-00101",
+     "action_type": "Click",
+     "body": "<p>Click <b>SAL-ORD-2026-00101</b>. On the real site, the order opens in Desk in a new browser tab.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "Its Connections",
+     "screen": "desk.so_form",
+     "target": "desk.tab:Connections",
+     "action_type": "Click",
+     "body": "<p>Click the <b>Connections</b> tab.</p>"
+    },
+    {
+     "title": "Same invoice",
+     "screen": "desk.so_form",
+     "target": "desk.so.si_link:ACC-SINV-2026-00004",
+     "action_type": "Observe",
+     "body": "<p>The same draft invoice is linked here. You checked the order without changing anything: the report is the quicker way to see every order at once.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Invoice a Delivered Order",
+   "track": "Sales Manager",
+   "sequence": 20,
+   "difficulty": "Intermediate",
+   "description": "An order was delivered before anyone made its draft invoice, so nothing was billed. Find it in the report and submit its Sales Invoice from Desk.",
+   "seed_data": {
+    "settings": {
+     "desk_user_name": "Training Manager"
+    },
+    "sales_orders": [
+     {
+      "name": "SAL-ORD-2026-00097",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-5",
+      "delivery_date": "today-4",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 30,
+        "rate": 24,
+        "amount": 720,
+        "delivered_qty": 30
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "qty": 4,
+        "rate": 65,
+        "amount": 260,
+        "delivered_qty": 4
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00098",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "transaction_date": "today-9",
+      "delivery_date": "today-7",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 40
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 10
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "Completed",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00099",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "transaction_date": "today-12",
+      "delivery_date": "today-8",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00100",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "transaction_date": "today-2",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 30,
+        "rate": 18,
+        "amount": 540,
+        "delivered_qty": 20
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00101",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-3",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     }
+    ],
+    "sales_invoices": [
+     {
+      "name": "ACC-SINV-2026-00001",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "due_date": "today+23",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 1510,
+      "docstatus": 1,
+      "status": "Unpaid"
+     },
+     {
+      "name": "ACC-SINV-2026-00002",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-12",
+      "due_date": "today-12",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2300,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00003",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-2",
+      "due_date": "today-2",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 20,
+        "rate": 18,
+        "amount": 360,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 360,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00004",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "sales_order": "SAL-ORD-2026-00101",
+      "posting_date": "today-3",
+      "due_date": "today-3",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2500,
+      "docstatus": 0,
+      "status": "Draft"
+     }
+    ],
+    "delivery_notes": [
+     {
+      "name": "MAT-DN-2026-00001",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 40,
+        "qty": 40,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "uom": "Pack",
+        "ordered_qty": 10,
+        "qty": 10,
+        "rate": 55
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00002",
+      "sales_order": "SAL-ORD-2026-00097",
+      "posting_date": "today-4",
+      "assigned_to": "driver.two@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 30,
+        "qty": 30,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "uom": "Nos",
+        "ordered_qty": 4,
+        "qty": 4,
+        "rate": 65
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00003",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-1",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "uom": "Nos",
+        "ordered_qty": 30,
+        "qty": 20,
+        "rate": 18
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "remarks": "Customer had room for 20 only",
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00004",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-8",
+      "assigned_to": "driver.two@luxury.test"
+     }
+    ],
+    "next_so": 103,
+    "next_si": 5,
+    "next_dn": 5,
+    "next_pe": 1
+   },
+   "steps": [
+    {
+     "title": "Filter by fulfilment",
+     "screen": "dms.so_status",
+     "target": "dms.filter.fulfilment",
+     "action_type": "Select Option",
+     "body": "<p>In <b>Fulfilment Status</b>, choose <b>Delivered – Invoice Pending</b>.</p>",
+     "expected_field": "so_status.filters.fulfilment_status",
+     "expected_value": "Delivered – Invoice Pending",
+     "auto_value": "Delivered – Invoice Pending"
+    },
+    {
+     "title": "Not invoiced",
+     "screen": "dms.so_status",
+     "target": "dms.so_cell:SAL-ORD-2026-00097/invoice_status",
+     "action_type": "Observe",
+     "body": "<p>SAL-ORD-2026-00097 is delivered but <b>Not Invoiced</b>. The store keeper didn't save a draft invoice before the delivery, so the Delivery Note had no invoice to submit. The customer hasn't been billed.</p>"
+    },
+    {
+     "title": "Open the order",
+     "screen": "dms.so_status",
+     "target": "dms.so_link:SAL-ORD-2026-00097",
+     "action_type": "Click",
+     "body": "<p>Click <b>SAL-ORD-2026-00097</b> to open it in Desk.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "To Bill",
+     "screen": "desk.so_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>ERPNext shows <b>To Bill</b>: everything is delivered, nothing is billed.</p>"
+    },
+    {
+     "title": "Open the Create menu",
+     "screen": "desk.so_form",
+     "target": "desk.create",
+     "action_type": "Click",
+     "body": "<p>Click <b>Create</b>.</p>",
+     "expected_field": "ui.desk_menu",
+     "expected_value": "create"
+    },
+    {
+     "title": "Create the invoice",
+     "screen": "desk.so_form",
+     "target": "desk.create.sales_invoice",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Sales Invoice</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.si_form"
+    },
+    {
+     "title": "Delivered quantities",
+     "screen": "desk.si_form",
+     "target": "desk.si.items",
+     "action_type": "Observe",
+     "body": "<p>The invoice has the order's quantities: 30 reams and 4 staplers, all of them delivered.</p>"
+    },
+    {
+     "title": "Save",
+     "screen": "desk.si_form",
+     "target": "desk.si.save",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b>.</p>",
+     "expected_field": "desk_si.saved",
+     "expected_value": "true"
+    },
+    {
+     "title": "Submit",
+     "screen": "desk.si_form",
+     "target": "desk.si.submit",
+     "action_type": "Click",
+     "body": "<p>Normally you leave the invoice as a draft. Here everything is already delivered, so submit it now: click <b>Submit</b>.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "desk.si_form",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Yes</b>.</p>",
+     "expected_field": "desk_si.docstatus",
+     "expected_value": "1"
+    },
+    {
+     "title": "Unpaid",
+     "screen": "desk.si_form",
+     "target": "desk.si.outstanding",
+     "action_type": "Observe",
+     "body": "<p>The invoice is <b>Unpaid</b> with QAR 980.00 outstanding. Gulf Office Supplies' balance in Customer Balance went up by the same amount.</p>"
+    },
+    {
+     "title": "Its Connections",
+     "screen": "desk.si_form",
+     "target": "desk.tab:Connections",
+     "action_type": "Click",
+     "body": "<p>Click the <b>Connections</b> tab.</p>"
+    },
+    {
+     "title": "Back to the order",
+     "screen": "desk.si_form",
+     "target": "desk.si.so_link:SAL-ORD-2026-00097",
+     "action_type": "Click",
+     "body": "<p>Click <b>SAL-ORD-2026-00097</b> under Sales Order.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.so_form"
+    },
+    {
+     "title": "Completed",
+     "screen": "desk.so_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>The order is now <b>Completed</b>: delivered and billed.</p>"
+    },
+    {
+     "title": "Back in the report",
+     "screen": "dms.so_status",
+     "target": "dms.card:total",
+     "action_type": "Click",
+     "body": "<p>Back in DMS, the order no longer matches the filter. Click <b>Total Sales Orders</b> to show every order.</p>",
+     "expected_field": "so_status.card",
+     "expected_value": "total"
+    },
+    {
+     "title": "Fully Completed",
+     "screen": "dms.so_status",
+     "target": "dms.so_cell:SAL-ORD-2026-00097/fulfilment_status",
+     "action_type": "Observe",
+     "body": "<p>SAL-ORD-2026-00097 is <b>Fully Completed</b>.</p>"
+    }
+   ]
+  },
+  {
+   "title": "Collect a Payment",
+   "track": "Sales Manager",
+   "sequence": 30,
+   "difficulty": "Intermediate",
+   "description": "A customer pays an invoice by bank transfer. Record the Payment Entry in Desk and see their balance go down in DMS.",
+   "seed_data": {
+    "settings": {
+     "desk_user_name": "Training Manager"
+    },
+    "sales_orders": [
+     {
+      "name": "SAL-ORD-2026-00097",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-5",
+      "delivery_date": "today-4",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 30,
+        "rate": 24,
+        "amount": 720,
+        "delivered_qty": 30
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "qty": 4,
+        "rate": 65,
+        "amount": 260,
+        "delivered_qty": 4
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00098",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "transaction_date": "today-9",
+      "delivery_date": "today-7",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 40
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 10
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "Completed",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00099",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "transaction_date": "today-12",
+      "delivery_date": "today-8",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00100",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "transaction_date": "today-2",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 30,
+        "rate": 18,
+        "amount": 540,
+        "delivered_qty": 20
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     },
+     {
+      "name": "SAL-ORD-2026-00101",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "transaction_date": "today-3",
+      "delivery_date": "today+1",
+      "warehouse": "Main Store - LS",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "discount_type": "",
+      "discount_value": 0,
+      "total": 0,
+      "discount_amount": 0,
+      "grand_total": 0,
+      "docstatus": 1,
+      "status": "To Deliver and Bill",
+      "mine": true
+     }
+    ],
+    "sales_invoices": [
+     {
+      "name": "ACC-SINV-2026-00001",
+      "customer": "CUST-0004",
+      "customer_name": "Corniche Corporate Services",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "due_date": "today+23",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "qty": 40,
+        "rate": 24,
+        "amount": 960,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "qty": 10,
+        "rate": 55,
+        "amount": 550,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 1510,
+      "docstatus": 1,
+      "status": "Unpaid"
+     },
+     {
+      "name": "ACC-SINV-2026-00002",
+      "customer": "CUST-0003",
+      "customer_name": "Pearl School Stationers",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-12",
+      "due_date": "today-12",
+      "items": [
+       {
+        "item_code": "NB-PKT-03",
+        "item_name": "Pocket Notebook",
+        "qty": 50,
+        "rate": 22,
+        "amount": 1100,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-BLU-01",
+        "item_name": "Signature Blue Ballpoint Pen",
+        "qty": 100,
+        "rate": 12,
+        "amount": 1200,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2300,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00003",
+      "customer": "CUST-0002",
+      "customer_name": "Al Noor Trading",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-2",
+      "due_date": "today-2",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 20,
+        "rate": 18,
+        "amount": 360,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 360,
+      "docstatus": 0,
+      "status": "Draft"
+     },
+     {
+      "name": "ACC-SINV-2026-00004",
+      "customer": "CUST-0001",
+      "customer_name": "Gulf Office Supplies",
+      "sales_order": "SAL-ORD-2026-00101",
+      "posting_date": "today-3",
+      "due_date": "today-3",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "qty": 100,
+        "rate": 18,
+        "amount": 1800,
+        "delivered_qty": 0
+       },
+       {
+        "item_code": "PEN-GEL-03",
+        "item_name": "Gel Pen Black (Pack of 10)",
+        "qty": 20,
+        "rate": 35,
+        "amount": 700,
+        "delivered_qty": 0
+       }
+      ],
+      "grand_total": 2500,
+      "docstatus": 0,
+      "status": "Draft"
+     }
+    ],
+    "delivery_notes": [
+     {
+      "name": "MAT-DN-2026-00001",
+      "sales_order": "SAL-ORD-2026-00098",
+      "posting_date": "today-7",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 40,
+        "qty": 40,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-FLD-02",
+        "item_name": "Box File (Pack of 5)",
+        "uom": "Pack",
+        "ordered_qty": 10,
+        "qty": 10,
+        "rate": 55
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00002",
+      "sales_order": "SAL-ORD-2026-00097",
+      "posting_date": "today-4",
+      "assigned_to": "driver.two@luxury.test",
+      "items": [
+       {
+        "item_code": "PPR-A4-01",
+        "item_name": "A4 Copy Paper (Ream)",
+        "uom": "Ream",
+        "ordered_qty": 30,
+        "qty": 30,
+        "rate": 24
+       },
+       {
+        "item_code": "OFF-STP-01",
+        "item_name": "Heavy Duty Stapler",
+        "uom": "Nos",
+        "ordered_qty": 4,
+        "qty": 4,
+        "rate": 65
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00003",
+      "sales_order": "SAL-ORD-2026-00100",
+      "posting_date": "today-1",
+      "assigned_to": "driver.one@luxury.test",
+      "items": [
+       {
+        "item_code": "NB-A4-02",
+        "item_name": "Spiral Notebook A4",
+        "uom": "Nos",
+        "ordered_qty": 30,
+        "qty": 20,
+        "rate": 18
+       }
+      ],
+      "attachments": [
+       "delivery-photo-1.jpg"
+      ],
+      "remarks": "Customer had room for 20 only",
+      "docstatus": 1,
+      "status": "Completed"
+     },
+     {
+      "name": "MAT-DN-2026-00004",
+      "sales_order": "SAL-ORD-2026-00099",
+      "posting_date": "today-8",
+      "assigned_to": "driver.two@luxury.test"
+     }
+    ],
+    "next_so": 103,
+    "next_si": 5,
+    "next_dn": 5,
+    "next_pe": 1
+   },
+   "steps": [
+    {
+     "title": "What the customer owes",
+     "screen": "dms.customer_balance",
+     "target": "dms.balance.amount:CUST-0004",
+     "action_type": "Observe",
+     "body": "<p>This is <b>Customer Balance</b> in DMS. Corniche Corporate Services owes <b>QAR 3,500.00</b>. They tell you they transferred QAR 1,510.00 for invoice ACC-SINV-2026-00001.</p>"
+    },
+    {
+     "title": "Open the invoice",
+     "screen": "desk.si_list",
+     "target": "desk.si_row:ACC-SINV-2026-00001",
+     "action_type": "Click",
+     "body": "<p>Payments are recorded in ERPNext Desk. In <b>Accounting ▸ Sales Invoice</b>, open <b>ACC-SINV-2026-00001</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.si_form"
+    },
+    {
+     "title": "Outstanding",
+     "screen": "desk.si_form",
+     "target": "desk.si.outstanding",
+     "action_type": "Observe",
+     "body": "<p><b>Outstanding Amount</b> is QAR 1,510.00: nothing has been paid on this invoice yet.</p>"
+    },
+    {
+     "title": "Open the Create menu",
+     "screen": "desk.si_form",
+     "target": "desk.si.create",
+     "action_type": "Click",
+     "body": "<p>Click <b>Create</b>.</p>",
+     "expected_field": "ui.desk_menu",
+     "expected_value": "si_create"
+    },
+    {
+     "title": "Create the payment",
+     "screen": "desk.si_form",
+     "target": "desk.si.create.payment",
+     "action_type": "Click",
+     "body": "<p>Choose <b>Payment</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.pe_form"
+    },
+    {
+     "title": "Filled in for you",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.references",
+     "action_type": "Observe",
+     "body": "<p>ERPNext filled in the customer and the invoice, and set <b>Paid Amount</b> to the outstanding QAR 1,510.00. If a customer pays only part, lower the Paid Amount.</p>"
+    },
+    {
+     "title": "Mode of Payment",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.mode",
+     "action_type": "Select Option",
+     "body": "<p>In <b>Mode of Payment</b>, choose <b>Wire Transfer</b>.</p>",
+     "expected_field": "desk_pe.mode_of_payment",
+     "expected_value": "Wire Transfer",
+     "auto_value": "Wire Transfer"
+    },
+    {
+     "title": "The bank account",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.paid_to",
+     "action_type": "Observe",
+     "body": "<p><b>Account Paid To</b> changed to the bank account that Wire Transfer pays into.</p>"
+    },
+    {
+     "title": "Bank payments need a reference",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.transaction",
+     "action_type": "Observe",
+     "body": "<p>A payment into a bank account needs a <b>Cheque/Reference No</b> and <b>Date</b>. Without them, ERPNext refuses to save: <i>Reference No and Reference Date is mandatory for Bank transaction</i>.</p>"
+    },
+    {
+     "title": "Reference No",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.reference_no",
+     "action_type": "Enter Value",
+     "body": "<p>Enter the transfer reference from the customer's remittance: <b>QNB-TRF-558214</b>.</p>",
+     "auto_value": "QNB-TRF-558214"
+    },
+    {
+     "title": "Reference Date",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.reference_date",
+     "action_type": "Enter Value",
+     "body": "<p>Set <b>Cheque/Reference Date</b> to today.</p>",
+     "auto_value": "today"
+    },
+    {
+     "title": "Save",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.save",
+     "action_type": "Click",
+     "body": "<p>Click <b>Save</b>.</p>",
+     "expected_field": "desk_pe.saved",
+     "expected_value": "true"
+    },
+    {
+     "title": "Submit",
+     "screen": "desk.pe_form",
+     "target": "desk.pe.submit",
+     "action_type": "Click",
+     "body": "<p>Click <b>Submit</b>. A Payment Entry only counts once it is submitted.</p>",
+     "expected_field": "dialog.open",
+     "expected_value": "true"
+    },
+    {
+     "title": "Confirm",
+     "screen": "desk.pe_form",
+     "target": "dialog.confirm",
+     "action_type": "Click",
+     "body": "<p>Click <b>Yes</b>.</p>",
+     "expected_field": "desk_pe.docstatus",
+     "expected_value": "1"
+    },
+    {
+     "title": "Submitted",
+     "screen": "desk.pe_form",
+     "target": "desk.status",
+     "action_type": "Observe",
+     "body": "<p>The payment is <b>Submitted</b> and allocated against ACC-SINV-2026-00001.</p>"
+    },
+    {
+     "title": "Back to the invoices",
+     "screen": "desk.pe_form",
+     "target": "desk.nav.sales_invoice",
+     "action_type": "Click",
+     "body": "<p>In the sidebar, click <b>Sales Invoice</b>.</p>",
+     "expected_field": "screen",
+     "expected_value": "desk.si_list"
+    },
+    {
+     "title": "Paid",
+     "screen": "desk.si_list",
+     "target": "desk.si_row:ACC-SINV-2026-00001",
+     "action_type": "Observe",
+     "body": "<p>ACC-SINV-2026-00001 is now <b>Paid</b>.</p>"
+    },
+    {
+     "title": "Lower balance",
+     "screen": "dms.customer_balance",
+     "target": "dms.balance.amount:CUST-0004",
+     "action_type": "Observe",
+     "body": "<p>Back in DMS, Corniche Corporate Services now owes <b>QAR 1,990.00</b>: the QAR 1,510.00 payment came off their balance.</p>"
+    }
+   ]
+  }
+ ]
+}

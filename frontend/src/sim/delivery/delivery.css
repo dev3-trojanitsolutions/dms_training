@@ -1,0 +1,329 @@
+/*
+ * A copy of the delivery partner portal look (apps/dms/dms/www/delivery-*),
+ * scoped to .dportal. Light only, like the real portal.
+ */
+.dportal {
+  --dl-bg: #fbfaf6;
+  --dl-surface: #ffffff;
+  --dl-border: #ece6db;
+  --dl-text: #23201c;
+  --dl-text-2: #6f675b;
+  --dl-text-3: #a59c8c;
+  --dl-primary: #294337;
+  --dl-primary-2: #2e4034;
+  --dl-cream: #f6f3ed;
+
+  position: relative;
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+  container-type: inline-size;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--dl-text);
+  background: var(--dl-bg);
+  color-scheme: light;
+}
+:where(.dportal) *,
+:where(.dportal) *::before,
+:where(.dportal) *::after {
+  box-sizing: border-box;
+}
+:where(.dportal) button,
+:where(.dportal) input,
+:where(.dportal) select,
+:where(.dportal) textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* ── Sidebar ─────────────────────────────────────────── */
+.dl-sidebar {
+  width: 220px;
+  flex: none;
+  background: #fff;
+  border-right: 1px solid #e8e8e8;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dl-brand {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 21px;
+  font-weight: 600;
+  padding: 0 8px 18px;
+}
+.dl-nav {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+}
+.dl-nav:hover {
+  background: #f6f6f4;
+}
+.dl-nav.active {
+  font-weight: 600;
+  color: var(--dl-primary);
+  background: #f0f4f3;
+}
+.dl-nav.muted {
+  opacity: 0.5;
+  cursor: default;
+}
+.dl-sidebar-foot {
+  margin-top: auto;
+  padding: 0 8px;
+  font-size: 11px;
+  color: var(--dl-text-3);
+}
+.dl-sidebar-foot b {
+  display: block;
+  color: var(--dl-text-2);
+  font-size: 12px;
+}
+@container (max-width: 760px) {
+  .dl-sidebar {
+    width: 64px;
+    padding: 18px 8px;
+  }
+  .dl-brand,
+  .dl-nav span:last-child,
+  .dl-sidebar-foot {
+    display: none;
+  }
+  .dl-nav {
+    justify-content: center;
+  }
+}
+
+/* ── Main ────────────────────────────────────────────── */
+.dl-main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+}
+.dl-wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+@container (max-width: 700px) {
+  .dl-wrap {
+    padding: 18px 14px 32px;
+  }
+}
+.dl-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dl-text-3);
+}
+.dl-h1 {
+  margin: 6px 0 4px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.dl-section-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+}
+.dl-sub {
+  color: var(--dl-text-2);
+  font-size: 14px;
+}
+.dl-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.dl-h2 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* ── Buttons, inputs, badges ─────────────────────────── */
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 6px;
+  background: var(--dl-primary);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.dl-btn.ghost {
+  background: #fff;
+  color: var(--dl-text-2);
+  border: 1px solid #dcd5c8;
+}
+.dl-btn.pill {
+  width: 100%;
+  border-radius: 999px;
+  padding: 13px;
+  background: var(--dl-primary-2);
+  color: var(--dl-cream);
+}
+.dl-btn.pill.ghost {
+  background: #fff;
+  color: var(--dl-text-2);
+}
+.dl-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.dl-search {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--dl-border);
+  border-radius: 12px;
+  background: #fff;
+  font-size: 14px;
+  outline: none;
+}
+.dl-search:focus {
+  border-color: #b9ae9a;
+}
+.dl-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.dl-badge.pending {
+  background: #f6ead2;
+  color: #9a6b12;
+}
+.dl-badge.progress {
+  background: #e4ecf0;
+  color: #3a5e72;
+}
+.dl-badge.completed {
+  background: #e2ede5;
+  color: #356048;
+}
+.dl-badge.addr-ok {
+  background: #eaf0ec;
+  color: #3a5a48;
+  font-weight: 600;
+}
+.dl-badge.addr-missing {
+  background: #f4e6e0;
+  color: #9a4a35;
+  font-weight: 600;
+}
+.dl-count {
+  font-size: 13px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #f0ebe1;
+  color: var(--dl-text-2);
+}
+
+/* ── Cards ───────────────────────────────────────────── */
+.dl-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.dl-card {
+  text-align: left;
+  width: 100%;
+  background: #fff;
+  border: 1px solid var(--dl-border);
+  border-radius: 18px;
+  padding: 17px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  box-shadow: 0 1px 2px rgba(35, 32, 28, 0.04);
+}
+button.dl-card {
+  cursor: pointer;
+}
+button.dl-card:hover {
+  border-color: #d8cfbf;
+  box-shadow: 0 4px 12px rgba(35, 32, 28, 0.08);
+}
+.dl-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.dl-dn-no {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #8a8275;
+  letter-spacing: 0.02em;
+}
+.dl-customer {
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.dl-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 13px;
+  color: var(--dl-text-2);
+}
+.dl-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.dl-empty {
+  padding: 28px 12px;
+  text-align: center;
+  color: var(--dl-text-3);
+  border: 1px dashed var(--dl-border);
+  border-radius: 14px;
+}
+.dl-panel {
+  background: #fff;
+  border: 1px solid var(--dl-border);
+  border-radius: 16px;
+  padding: 18px;
+}
+.dl-note {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px dashed #8ab4f8;
+  background: #f0f6ff;
+  color: #1e3a5f;
+  font-size: 12.5px;
+}

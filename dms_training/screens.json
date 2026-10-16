@@ -1,0 +1,366 @@
+{
+	"groups": {
+		"portal_nav": {
+			"nav.dashboard": "Sidebar: Dashboard",
+			"nav.customers": "Sidebar: Customers",
+			"nav.new_order": "Sidebar: New Order",
+			"nav.order_history": "Sidebar: Order History",
+			"nav.pending_orders": "Sidebar: Pending Orders"
+		},
+		"dialogs": {
+			"dialog.confirm": "Confirm dialog: confirm button",
+			"dialog.cancel": "Confirm dialog: cancel button",
+			"alert.ok": "Message box: OK button",
+			"toast": "Toast message"
+		},
+		"desk_nav": {
+			"desk.nav.sales_order": "Desk sidebar: Sales Order Created",
+			"desk.nav.delivery_note": "Desk sidebar: Delivery Note",
+			"desk.status": "Form header: status indicator",
+			"desk.tab:{tab}": "Form tab, for example desk.tab:Connections",
+			"desk.nav.sales_invoice": "Desk sidebar: Sales Invoice",
+			"desk.nav.payment_entry": "Desk sidebar: Payment Entry"
+		},
+		"delivery_nav": {
+			"dnav.home": "Delivery sidebar: Dashboard",
+			"dnav.assign": "Delivery sidebar: Delivery Assign",
+			"dnav.pending": "Delivery sidebar: Pending Deliveries",
+			"dnav.completed": "Delivery sidebar: Completed Deliveries"
+		},
+		"dms_nav": {
+			"dms.nav.so_status": "DMS sidebar: Sales Order Status",
+			"dms.nav.customer_balance": "DMS sidebar: Customer Balance",
+			"dms.nav.desk": "DMS sidebar: Back to System"
+		}
+	},
+	"screens": {
+		"portal.sales_home": {
+			"label": "Sales Portal: Dashboard",
+			"include": [
+				"portal_nav"
+			],
+			"targets": {
+				"home.new_order": "New Order button",
+				"home.stats": "Stats cards",
+				"home.activity": "Recent activity",
+				"home.quick_actions": "Quick actions"
+			}
+		},
+		"portal.sales_customer": {
+			"label": "Sales Portal: Customers",
+			"include": [
+				"portal_nav"
+			],
+			"targets": {
+				"customer.search": "Customer search box",
+				"customer.open:{customer}": "Customer card",
+				"customer.credit": "Customer detail: credit",
+				"customer.new_order": "Customer detail: New Order",
+				"customer.back": "Customer detail: back to list"
+			}
+		},
+		"portal.sales_order": {
+			"label": "Sales Portal: New Order",
+			"include": [
+				"portal_nav",
+				"dialogs"
+			],
+			"targets": {
+				"order.billing_address": "Billing address",
+				"order.category:{item_group}": "Category in the sidebar",
+				"order.warehouse": "Warehouse select",
+				"order.item_search": "Item search box",
+				"order.item:{item_code}": "Item card",
+				"order.add:{item_code}": "Item card: Add button",
+				"order.qty:{item_code}": "Cart: quantity input",
+				"order.remove:{item_code}": "Cart: remove button",
+				"order.cart": "Order summary panel",
+				"order.credit": "Credit section",
+				"order.discount_type": "Discount type select",
+				"order.discount_value": "Discount value input",
+				"order.totals": "Totals",
+				"order.order_date": "Order date",
+				"order.delivery_date": "Delivery date",
+				"order.save": "Save button",
+				"order.submit": "Submit Sales Order button"
+			}
+		},
+		"portal.pending_orders": {
+			"label": "Sales Portal: Pending Orders",
+			"include": [
+				"portal_nav",
+				"dialogs"
+			],
+			"targets": {
+				"pending.search": "Search box",
+				"pending.table": "Pending orders table",
+				"pending.row:{order}": "Order row",
+				"pending.action:{order}": "Row: Select Action"
+			}
+		},
+		"portal.order_history": {
+			"label": "Sales Portal: Order History",
+			"include": [
+				"portal_nav"
+			],
+			"targets": {
+				"history.search": "Search box",
+				"history.status_filter": "Status filter",
+				"history.list": "Order list",
+				"history.row:{order}": "Order card",
+				"history.edit:{order}": "Order card: Edit link"
+			}
+		},
+		"desk.so_list": {
+			"label": "Desk: Sales Order list",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.so_list.search": "Search box",
+				"desk.so_list.table": "List",
+				"desk.so_row:{order}": "Sales Order row"
+			}
+		},
+		"desk.so_form": {
+			"label": "Desk: Sales Order form",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.create": "Create button",
+				"desk.create.delivery_note": "Create menu: Delivery Note",
+				"desk.so.items": "Items table",
+				"desk.so.connections": "Connections",
+				"desk.so.dn_link:{delivery_note}": "Connections: Delivery Note link",
+				"desk.update_items": "Update Items button",
+				"desk.status_menu": "Status button",
+				"desk.so.row:{item_code}": "Items table: open row (pencil)",
+				"desk.so.row_panel": "Open row: details",
+				"desk.so.row_delivered": "Open row: Delivered Qty",
+				"desk.so.status_section": "More Info tab: Status section",
+				"desk.create.sales_invoice": "Create menu: Sales Invoice",
+				"desk.so.si_link:{invoice}": "Connections: Sales Invoice link"
+			}
+		},
+		"desk.dn_list": {
+			"label": "Desk: Delivery Note list",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.dn_list.table": "List",
+				"desk.dn_row:{delivery_note}": "Delivery Note row"
+			}
+		},
+		"desk.dn_form": {
+			"label": "Desk: Delivery Note form",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.dn.warehouse": "Set Source Warehouse",
+				"desk.dn.items": "Items table",
+				"desk.dn.qty:{item_code}": "Items table: quantity",
+				"desk.save": "Save button",
+				"desk.dn.submit": "Submit button",
+				"desk.dn.assigned": "Sidebar: Assigned To",
+				"desk.assign": "Sidebar: Assigned To + button",
+				"desk.assign.user": "Assign To dialog: user",
+				"desk.assign.add": "Assign To dialog: Add button"
+			}
+		},
+		"delivery.home": {
+			"label": "Delivery Portal: Dashboard",
+			"include": [
+				"delivery_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dhome.start": "Start Deliveries button",
+				"dhome.stats": "Stats cards",
+				"dhome.activity": "Recent activity"
+			}
+		},
+		"delivery.assign": {
+			"label": "Delivery Portal: Delivery Assign",
+			"include": [
+				"delivery_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dassign.search": "Search box",
+				"dassign.unassigned": "Unassigned Deliveries",
+				"dassign.mine": "My Assigned Deliveries",
+				"dassign.assign:{delivery_note}": "Assign to Me button",
+				"dassign.unassign:{delivery_note}": "Unassign button"
+			}
+		},
+		"delivery.pending": {
+			"label": "Delivery Portal: Pending Deliveries",
+			"include": [
+				"delivery_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dpending.search": "Search box",
+				"dpending.list": "Pending list",
+				"dpending.open:{delivery_note}": "Delivery card"
+			}
+		},
+		"delivery.completed": {
+			"label": "Delivery Portal: Completed Deliveries",
+			"include": [
+				"delivery_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dcompleted.search": "Search box",
+				"dcompleted.list": "Completed list",
+				"dcompleted.open:{delivery_note}": "Delivery card"
+			}
+		},
+		"delivery.note": {
+			"label": "Delivery Portal: Delivery Note",
+			"include": [
+				"delivery_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dnote.summary": "Customer and delivery summary",
+				"dnote.items": "Items",
+				"dnote.qty:{item_code}": "Item: delivered quantity",
+				"dnote.minus:{item_code}": "Item: − button",
+				"dnote.plus:{item_code}": "Item: + button",
+				"dnote.proof": "Proof of Delivery",
+				"dnote.camera": "Proof: Camera",
+				"dnote.photo": "Proof: Photo / Gallery",
+				"dnote.pdf": "Proof: PDF",
+				"dnote.attachments": "Proof: attached files",
+				"dnote.remove:{index}": "Proof: remove a file",
+				"dnote.remarks": "Delivery Remarks",
+				"dnote.save": "Save button",
+				"dnote.submit": "Submit Delivery button",
+				"dnote.success": "Delivery Completed screen",
+				"dnote.back": "Back to Deliveries button"
+			}
+		},
+		"desk.si_list": {
+			"label": "Desk: Sales Invoice list",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.si_list.table": "List",
+				"desk.si_row:{invoice}": "Sales Invoice row"
+			}
+		},
+		"desk.si_form": {
+			"label": "Desk: Sales Invoice form",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.si.items": "Items table",
+				"desk.si.qty:{item_code}": "Items table: quantity",
+				"desk.si.save": "Save button",
+				"desk.si.submit": "Submit button",
+				"desk.si.so_link:{order}": "Connections: Sales Order link",
+				"desk.si.create": "Create button (submitted invoice)",
+				"desk.si.create.payment": "Create menu: Payment",
+				"desk.si.outstanding": "Totals: Outstanding Amount",
+				"desk.si.pe_link:{payment_entry}": "Connections: Payment Entry link"
+			}
+		},
+		"desk.pe_list": {
+			"label": "Desk: Payment Entry list",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.pe_list.table": "List",
+				"desk.pe_row:{payment_entry}": "Payment Entry row"
+			}
+		},
+		"desk.pe_form": {
+			"label": "Desk: Payment Entry form",
+			"include": [
+				"desk_nav",
+				"dialogs"
+			],
+			"targets": {
+				"desk.pe.mode": "Mode of Payment select",
+				"desk.pe.mode_field": "Mode of Payment field",
+				"desk.pe.party": "Payment From / To section",
+				"desk.pe.accounts": "Accounts section",
+				"desk.pe.paid_to": "Account Paid To",
+				"desk.pe.paid_amount": "Paid Amount input",
+				"desk.pe.references": "Payment References table",
+				"desk.pe.unallocated": "Unallocated Amount",
+				"desk.pe.transaction": "Transaction ID section",
+				"desk.pe.reference_no": "Cheque/Reference No input",
+				"desk.pe.reference_date": "Cheque/Reference Date input",
+				"desk.pe.save": "Save button",
+				"desk.pe.submit": "Submit button"
+			}
+		},
+		"dms.so_status": {
+			"label": "DMS: Sales Order Status report",
+			"include": [
+				"dms_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dms.filter.customer": "Customer filter",
+				"dms.filter.customer_clear": "Customer filter: clear (×)",
+				"dms.pick:{customer}": "Customer filter: option",
+				"dms.filter.so_status": "Sales Order Status filter",
+				"dms.filter.fulfilment": "Fulfilment Status filter",
+				"dms.filter.delivery": "Delivery Status filter",
+				"dms.filter.invoice": "Invoice Status filter",
+				"dms.checks": "Filter checkboxes",
+				"dms.check.overdue": "Overdue Deliveries Only",
+				"dms.check.pending_delivery": "Pending Delivery Only",
+				"dms.check.pending_invoice": "Pending Invoice Only",
+				"dms.check.draft_invoice": "Draft Invoices Only",
+				"dms.cards": "Summary cards",
+				"dms.card:{card}": "Summary card: total, value, completed, pending_delivery, pending_invoice, partly_delivered, draft_invoices, overdue, closed, cancelled",
+				"dms.table": "Report table",
+				"dms.so_row:{order}": "Order row",
+				"dms.so_link:{order}": "Order row: Sales Order link (opens Desk)",
+				"dms.so_cell:{order/field}": "Order row: delivery_status, invoice_status, fulfilment_status, days_overdue, pending_delivery_qty or draft_invoice_qty cell",
+				"dms.so_info:{order}": "Order row: Sales Invoices info button",
+				"dms.so_dn_info:{order}": "Order row: Delivery Notes info button",
+				"dms.details": "Linked Documents dialog",
+				"dms.details.sales_invoices": "Linked Documents: Sales Invoices table",
+				"dms.details.delivery_notes": "Linked Documents: Delivery Notes table",
+				"dms.details.link:{document}": "Linked Documents: document link (opens Desk)",
+				"dms.details.close": "Linked Documents: close"
+			}
+		},
+		"dms.customer_balance": {
+			"label": "DMS: Customer Balance report",
+			"include": [
+				"dms_nav",
+				"dialogs"
+			],
+			"targets": {
+				"dms.balance.customer": "Customer filter",
+				"dms.balance.customer_clear": "Customer filter: clear (×)",
+				"dms.pick:{customer}": "Customer filter: option",
+				"dms.balance.zero": "Show Zero Balance",
+				"dms.balance.total": "Total Pending Balance card",
+				"dms.balance.table": "Report table",
+				"dms.balance.row:{customer}": "Customer row",
+				"dms.balance.amount:{customer}": "Customer row: Outstanding Balance"
+			}
+		}
+	}
+}

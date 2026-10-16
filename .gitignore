@@ -53,3 +53,7 @@ jspm_packages/
 
 # Aider AI Chat
 .aider*
+
+# Built SPA
+dms_training/public/frontend
+dms_training/www/training.html

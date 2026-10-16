@@ -1,0 +1,126 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "creation": "2026-10-16 10:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "screen",
+  "target",
+  "action_type",
+  "section_text",
+  "body",
+  "hint",
+  "section_check",
+  "expected_field",
+  "expected_value",
+  "column_break_check",
+  "auto_value"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 3,
+   "idx": 1
+  },
+  {
+   "fieldname": "screen",
+   "fieldtype": "Autocomplete",
+   "label": "Screen",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2,
+   "description": "The simulated screen this step happens on.",
+   "idx": 2
+  },
+  {
+   "fieldname": "target",
+   "fieldtype": "Autocomplete",
+   "label": "Target",
+   "in_list_view": 1,
+   "columns": 3,
+   "description": "The element to highlight. Replace <code>{...}</code> with a real value, for example <code>order.add:PEN-BLU-01</code>. Use <code>@last_so</code> for the newest Sales Order.",
+   "idx": 3
+  },
+  {
+   "fieldname": "action_type",
+   "fieldtype": "Select",
+   "label": "Action",
+   "options": "Click\nEnter Value\nSelect Option\nObserve",
+   "default": "Click",
+   "reqd": 1,
+   "in_list_view": 1,
+   "columns": 2,
+   "idx": 4
+  },
+  {
+   "fieldname": "section_text",
+   "fieldtype": "Section Break",
+   "label": "Instruction",
+   "idx": 5
+  },
+  {
+   "fieldname": "body",
+   "fieldtype": "Text Editor",
+   "label": "Instruction",
+   "idx": 6
+  },
+  {
+   "fieldname": "hint",
+   "fieldtype": "Small Text",
+   "label": "Hint",
+   "description": "Shown when the trainee asks for help.",
+   "idx": 7
+  },
+  {
+   "fieldname": "section_check",
+   "fieldtype": "Section Break",
+   "label": "Completion Check",
+   "idx": 8
+  },
+  {
+   "fieldname": "expected_field",
+   "fieldtype": "Data",
+   "label": "Expected Field",
+   "description": "Simulator value to check, for example <code>cart.warehouse</code>, <code>last_so.status</code> or <code>screen</code>.",
+   "idx": 9
+  },
+  {
+   "fieldname": "expected_value",
+   "fieldtype": "Data",
+   "label": "Expected Value",
+   "description": "The value to match. Numbers can use <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code> or <code>!=</code>. Use <code>a|b</code> to accept either value.",
+   "idx": 10
+  },
+  {
+   "fieldname": "column_break_check",
+   "fieldtype": "Column Break",
+   "idx": 11
+  },
+  {
+   "fieldname": "auto_value",
+   "fieldtype": "Data",
+   "label": "Watch Mode Value",
+   "description": "What Watch mode types or selects. Dates can be <code>today</code> or <code>today+2</code>.",
+   "idx": 12
+  }
+ ],
+ "index_web_pages_for_search": 0,
+ "links": [],
+ "modified": "2026-10-16 18:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "dms training",
+ "name": "Training Step",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "istable": 1
+}
